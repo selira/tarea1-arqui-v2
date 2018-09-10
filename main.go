@@ -48,7 +48,7 @@ func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/comments", commentsIndex)
 	http.HandleFunc("/comments/create", commentsCreate)
-	http.ListenAndServe(":80", nil)
+	http.ListenAndServe(":8080", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
