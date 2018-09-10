@@ -48,7 +48,7 @@ func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/comments", commentsIndex)
 	http.HandleFunc("/comments/create", commentsCreate)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -87,7 +87,6 @@ func commentsIndex(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, http.StatusText(500), 500)
 		return
 	}
-	fmt.Println("Hola 5")
 
 	tpl.ExecuteTemplate(w, "comments.gohtml", comments)
 }
@@ -106,11 +105,8 @@ func commentsCreate(w http.ResponseWriter, r *http.Request) {
 	// get form values
 	comment := Comment{}
 	comment.Ip = r.RemoteAddr
-	comment.Date = time.Now().String()
-	fmt.Println(comment.Date)
+	comment.Date = time.Now().Format("2006-01-02 15:04:05")
 	comment.Comment = r.FormValue("comment")
-
-	fmt.Println("hola")
 
 	if comment.Comment == "" {
 		http.Error(w, http.StatusText(400), http.StatusBadRequest)
@@ -126,7 +122,6 @@ func commentsCreate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("hola666")
 
 	tpl.ExecuteTemplate(w, "created.gohtml", comment)
 
